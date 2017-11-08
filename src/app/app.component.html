@@ -1,0 +1,11 @@
+<p>Bild Url</p>
+<div>
+  <input type="text" [(ngModel)]="testUrl"/>
+</div>
+<div>
+  <button (click)="processImage()">Bild analysieren</button>
+</div>
+
+<pre>
+  {{response | json}}
+</pre>
