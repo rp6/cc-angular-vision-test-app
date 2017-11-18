@@ -15,6 +15,7 @@ import { Observable } from "rxjs/Observable";
 })
 export class AppComponent implements OnInit {
   title = 'app';
+  file: any;
   response: any = {};
 
   constructor(private imageUploadService: ImageUploadService, private httpClient: HttpClient) {
@@ -36,35 +37,81 @@ export class AppComponent implements OnInit {
       })
   }
 
-  awsStuff(): Observable<any> {
+  onChange(event) {
+    const files = event.srcElement.files;
+    this.file = event.srcElement.files[0];
+    console.log(files);
+  }
+
+  getBase64(file): void {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = () => {
+      console.log(reader.result);
+      this.awsStuff(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log('Error: ', error);
+    };
+  }
+
+
+  // test(): void {
+  //   const file = $('#load-file')[0].files[0];
+  //   const fileReader = new FileReader();
+  //   fileReader.onloadend = function (e) {
+  //     const arrayBuffer = e.target.result;
+  //     blobUtil.arrayBufferToBlob(arrayBuffer, 'image/png').then(function (blob) {
+  //       console.log('here is a blob', blob);
+  //       console.log('its size is', blob.size);
+  //       console.log('its type is', blob.type);
+  //     }).catch(console.log.bind(console));
+  //   };
+  //   fileReader.readAsArrayBuffer(file);
+  // }
+
+  awsStuff(imageBlob): any {
     const rekognition = new AWS.Rekognition({apiVersion: '2016-06-27', region: this.awsRegion});
     rekognition.config.credentials = new Credentials(this.awsAccessKey, this.awsSecretKey);
-    return this.httpClient.get(this.currentImageUrl, {responseType: 'blob'})
-      .switchMap((data: Blob) =>
-        new Promise((resolve, reject) => {
-          const fileReader = new FileReader();
-          fileReader.onload = () => resolve(fileReader.result);
-          fileReader.onerror = reject;
-          fileReader.readAsArrayBuffer(data);
-        })
-      )
-      .switchMap((data: ArrayBuffer) =>
-        Observable.of(
-          rekognition.detectLabels({
-            Image: {Bytes: data}
-          }).promise()
-        ));
+    rekognition.detectLabels({
+        Image: {
+          Bytes: imageBlob
+        },
+      },
+      (error, data) => {
+        this.response = data;
+        console.log('test', error);
+      },
+
+    );
+    // return this.httpClient.get(this.currentImageUrl, {responseType: 'blob'})
+    //   .switchMap((data: Blob) =>
+    //     new Promise((resolve, reject) => {
+    //       const fileReader = new FileReader();
+    //       fileReader.onload = () => resolve(fileReader.result);
+    //       fileReader.onerror = reject;
+    //       fileReader.readAsArrayBuffer(data);
+    //     })
+    //   )
+    //   .switchMap((data: ArrayBuffer) =>
+    //     Observable.of(
+    //       rekognition.detectLabels({
+    //         Image: {Bytes: data}
+    //       }).promise()
+    //     ));
   }
 
   processImageWithAws(): void {
-    this.awsStuff().subscribe(
-      (res: any) => {
-        console.log('res suc', res);
-      },
-      (res: any) => {
-        console.log('res error', res);
-      }
-    )
+    this.getBase64(this.file);
+
+    // this.awsStuff().subscribe(
+    //   (res: any) => {
+    //     console.log('res suc', res);
+    //   },
+    //   (res: any) => {
+    //     console.log('res error', res);
+    //   }
+    // )
   }
 
   processImageWithGoogle(): void {
@@ -74,7 +121,7 @@ export class AppComponent implements OnInit {
           "image": {
             "source": {
               "imageUri":
-                this.currentImageUrl
+              this.currentImageUrl
             }
           },
           "features": [

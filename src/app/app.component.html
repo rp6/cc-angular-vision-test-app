@@ -15,6 +15,9 @@
   <label>Google Api Key</label>
   <input type="text" name="googleApiKey" [(ngModel)]="googleApiKey"/>
   <br>
+  <label>Image Datei</label>
+  <input type="file" name="file" (change)="onChange($event)"/>
+  <br>
   <label>Bild URL</label>
   <input type="text" name="currentImageUrl" [(ngModel)]="currentImageUrl"/>
 </form>
