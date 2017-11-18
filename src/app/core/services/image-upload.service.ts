@@ -9,13 +9,15 @@ export class ImageUploadService {
   constructor(private httpClient: HttpClient) {
   }
 
-  processImageWithAzure(sourceImageUrl: string): Observable<any> {
+  processImageWithAzure(subscriptionKey: string, sourceImageUrl: string): Observable<any> {
     // **********************************************
     // *** Update or verify the following values. ***
     // **********************************************
 
     // Replace the subscriptionKey string value with your valid subscription key.
-    const subscriptionKey = 'fa0b53beca714eada19884c6192b5e48';
+    // const subscriptionKey = subscriptionKey;
+
+    subscriptionKey = 'fa0b53beca714eada19884c6192b5e48';
 
     // Replace or verify the region.
     //

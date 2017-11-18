@@ -1,10 +1,24 @@
-<p>Bild Url</p>
-<div>
-  <input type="text" [(ngModel)]="testUrl"/>
-</div>
-<div>
-  <button (click)="processImage()">Bild analysieren</button>
-</div>
+<h3>Settings</h3>
+<form>
+  <label>Amazon Access Key</label>
+  <input type="text" name="awsAccessKey" [(ngModel)]="awsAccessKey"/>
+  <br>
+  <label>Amazon Secret Key</label>
+  <input type="password" name="awsSecretKey" [(ngModel)]="awsSecretKey"/>
+  <br>
+  <label>Amazon Region</label>
+  <input type="text" name="awsRegion" [(ngModel)]="awsRegion"/>
+  <br>
+  <label>Azure Subscription Key</label>
+  <input type="text" name="azureSubscriptionKey" [(ngModel)]="azureSubscriptionKey"/>
+  <br>
+  <label>Bild URL</label>
+  <input type="text" name="currentImageUrl" [(ngModel)]="currentImageUrl"/>
+</form>
+
+<h3>Run it</h3>
+<button (click)="processImage()">Bild analysieren mit Azure</button>
+<button (click)="processImageWithAws()">Bild analysieren mit AWS</button>
 
 <pre>
   {{response | json}}
