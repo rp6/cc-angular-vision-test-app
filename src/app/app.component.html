@@ -12,6 +12,9 @@
   <label>Azure Subscription Key</label>
   <input type="text" name="azureSubscriptionKey" [(ngModel)]="azureSubscriptionKey"/>
   <br>
+  <label>Google Api Key</label>
+  <input type="text" name="googleApiKey" [(ngModel)]="googleApiKey"/>
+  <br>
   <label>Bild URL</label>
   <input type="text" name="currentImageUrl" [(ngModel)]="currentImageUrl"/>
 </form>
@@ -19,6 +22,7 @@
 <h3>Run it</h3>
 <button (click)="processImage()">Bild analysieren mit Azure</button>
 <button (click)="processImageWithAws()">Bild analysieren mit AWS</button>
+<button (click)="processImageWithGoogle()">Bild analysieren mit Google</button>
 
 <pre>
   {{response | json}}

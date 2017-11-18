@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ImageUploadService } from './core/services/image-upload.service';
 import * as AWS from 'aws-sdk';
 import { Credentials } from 'aws-sdk';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/forkJoin'
 import 'rxjs/add/observable/of'
@@ -67,6 +67,42 @@ export class AppComponent implements OnInit {
     )
   }
 
+  processImageWithGoogle(): void {
+    const config = {
+      "requests": [
+        {
+          "image": {
+            "source": {
+              "imageUri":
+                this.currentImageUrl
+            }
+          },
+          "features": [
+            {
+              "type": "LABEL_DETECTION",
+              "maxResults": 1
+            }
+          ]
+        }
+      ]
+    };
+
+
+    const url = 'https://vision.googleapis.com/v1/images:annotate?key=' + this.googleApiKey;
+
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'application/json');
+
+    this.httpClient.post(url, config, {headers: httpHeaders}).subscribe(
+      (res) => {
+        this.response = res;
+      },
+      (res) => {
+        this.response = res;
+      }
+    );
+  }
+
   get awsAccessKey(): string {
     return localStorage.getItem('awsAccessKey');
   }
@@ -105,5 +141,13 @@ export class AppComponent implements OnInit {
 
   set awsRegion(value) {
     localStorage.setItem('awsRegion', value);
+  }
+
+  get googleApiKey(): string {
+    return localStorage.getItem('googleApiKey');
+  }
+
+  set googleApiKey(value) {
+    localStorage.setItem('googleApiKey', value);
   }
 }
