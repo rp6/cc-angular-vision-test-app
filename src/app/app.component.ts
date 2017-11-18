@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
 
   awsStuff(): Observable<any> {
     const rekognition = new AWS.Rekognition({apiVersion: '2016-06-27', region: this.awsRegion});
-    rekognition.config.update({region: this.awsRegion});
     rekognition.config.credentials = new Credentials(this.awsAccessKey, this.awsSecretKey);
     return this.httpClient.get(this.currentImageUrl, {responseType: 'blob'})
       .switchMap((data: Blob) =>
