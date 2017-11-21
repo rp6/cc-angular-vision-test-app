@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   analyseImageWithAzure(): void {
+    this.response = 'Loading ...';
     this.imageUploadService.analyseImageWithAzure(this.currentImageUrl, this.azureSubscriptionKey).subscribe((res: any) => {
         this.response = res;
       },
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   }
 
   analyseImageWithAws(): void {
+    this.response = 'Loading ...';
     this.imageUploadService.analyseImageWithAWS(this.currentImageUrl, this.awsRegion, this.awsAccessKey, this.awsSecretKey).subscribe(
       (res: any) => {
         this.response = res;
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit {
   }
 
   analyseImageWithGoogle(): void {
+    this.response = 'Loading ...';
     this.imageUploadService.analyseImageWithGoogle(this.currentImageUrl, this.googleApiKey).subscribe(
       (res) => {
         this.response = res;
