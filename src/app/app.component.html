@@ -1,32 +1,68 @@
-<h3>Settings</h3>
-<form>
-  <label>Amazon Access Key</label>
-  <input type="text" name="awsAccessKey" [(ngModel)]="awsAccessKey"/>
-  <br>
-  <label>Amazon Secret Key</label>
-  <input type="password" name="awsSecretKey" [(ngModel)]="awsSecretKey"/>
-  <br>
-  <label>Amazon Region</label>
-  <input type="text" name="awsRegion" [(ngModel)]="awsRegion"/>
-  <br>
-  <label>Azure Subscription Key</label>
-  <input type="text" name="azureSubscriptionKey" [(ngModel)]="azureSubscriptionKey"/>
-  <br>
-  <label>Google Api Key</label>
-  <input type="text" name="googleApiKey" [(ngModel)]="googleApiKey"/>
-  <br>
-  <label>Image Datei</label>
-  <input type="file" name="file" (change)="onChange($event)"/>
-  <br>
-  <label>Bild URL</label>
-  <input type="text" name="currentImageUrl" [(ngModel)]="currentImageUrl"/>
-</form>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h3>Settings</h3>
+      <small>To work correctly all settings have to be set up</small>
+    </div>
+    <div class="col-12">
+      <form class="mb-5">
+        <div class="form-group">
+          <label for="awsAccessKey">Amazon Access Key</label>
+          <input type="text" name="awsAccessKey" id="awsAccessKey" [(ngModel)]="awsAccessKey" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="awsSecretKey">Amazon Secret Key</label>
+          <input type="password" name="awsSecretKey" id="awsSecretKey" [(ngModel)]="awsSecretKey" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="awsRegion">Amazon Region</label>
+          <input type="text" name="awsRegion" id="awsRegion" [(ngModel)]="awsRegion" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="azureSubscriptionKey">Azure Subscription Key</label>
+          <input type="text" name="azureSubscriptionKey" id="azureSubscriptionKey" [(ngModel)]="azureSubscriptionKey" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label for="googleApiKey">Google Api Key</label>
+          <input type="text" name="googleApiKey" id="googleApiKey" [(ngModel)]="googleApiKey" class="form-control"/>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3>Image URL to analyse</h3>
+    </div>
+    <div class="col-12">
+      <form class="mb-5">
+        <div class="form-group">
+          <label for="currentImageUrl">Image URL</label>
+          <input type="text" name="currentImageUrl" id="currentImageUrl" [(ngModel)]="currentImageUrl" class="form-control"/>
+          <small id="imageUrlHelp" class="form-text text-muted">In order to work correctly with AWS Service you need to use a wikipedia image url</small>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3>Choose Service</h3>
+    </div>
+    <div class="col-12">
+      <form class="mb-5">
+        <button type="submit" class="btn btn-primary" (click)="analyseImageWithAzure()">Analyse with Azure</button>
+        <button type="submit" class="btn btn-primary" (click)="analyseImageWithAws()">Analyse with AWS</button>
+        <button type="submit" class="btn btn-primary" (click)="analyseImageWithGoogle()">Analyse with Google</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <h3>Service Response</h3>
+    </div>
+    <div class="col-12">
+      <pre>{{response | json}}</pre>
+    </div>
+  </div>
+</div>
 
-<h3>Run it</h3>
-<button (click)="processImage()">Bild analysieren mit Azure</button>
-<button (click)="processImageWithAws()">Bild analysieren mit AWS</button>
-<button (click)="processImageWithGoogle()">Bild analysieren mit Google</button>
 
-<pre>
-  {{response | json}}
-</pre>
