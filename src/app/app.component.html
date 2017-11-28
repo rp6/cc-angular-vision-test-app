@@ -43,6 +43,14 @@
       </form>
     </div>
   </div>
+  <div class="row" *ngIf="currentImageUrl">
+    <div class="col-12">
+      <h3>Image</h3>
+    </div>
+    <div class="col-12">
+      <img class="mb-5" [src]="currentImageUrl"/>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <h3>Choose Service</h3>
